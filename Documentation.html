@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Chat With AI - Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Involve:wght@400;600&family=Inter:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <img src="logo.svg" alt="Logo" class="logo">
+        <div class="header-buttons">
+            <a class='button_header_common'>Наши продукты</a>
+            <a href = "Developer.html" class='button_header_common'>Разработчики</a>
+            <a class='button_header'>Документация</a>
+        </div>
+        <button class="auth-button">Авторизация</button>
+    </div>
+    <div class="gemini-container">
+        <img src="gemini.svg" alt="gemini Image" class="gemini-image">
+    </div>
+    <div>
+        <div class="stek">
+            <p class="text-stek">Клиент</p>
+            <p class="text-stek">Сервер</p>
+        </div>
+        <div class="stek-div">
+            <ul class="stek-list">
+                <li>React</li>
+                <li>ESLint</li>
+                <li>react-query</li>
+                <li>Remark-gfm</li>
+                <li>Highlight</li>
+                <li>Tailwind CSS</li>
+                <li>@heroicons/react</li>
+                <li>Axios</li>
+                <li>@tanstack</li>
+                <li>TypeScript</li>
+                <li>MobX</li>
+                <li>MobX-React</li>
+            </ul>
+            <ul class="stek-list">
+                <li>Express.js</li>
+                <li>Morgan</li>
+                <li>Mongoose</li>
+                <li>UUID</li>
+                <li>Dotenv</li>
+                <li>Cors</li>
+                <li>Dotenv</li>
+                <li>MongoDB</li>
+                <li>Socket.IO</li>
+                <li>Mongoose</li>
+                <li>Ts-node</li>
+                <li>JsonWebToken</li>
+                <li>Node.js</li>
+            </ul>
+        </div>
+    </div>
+    <div class="stek-row">  
+        <div class="title">
+            <p>Запуск</p>
+        </div>
+        <div class="content-blocks">
+            <div class="block">
+                <p class="text">Клонирование проекта</p>
+                <p class="code">git clone https://github.com/IgorUshakov05/Web-Chat-With-AI.git</p>
+            </div>
+            <div class="block">
+                <p class="text">Установка зависимостей и запуск сервера</p>
+                <p class="code">cd Web-Chat-With-AI/backend && npm install && npm run dev</p>
+            </div>
+            <div class="block">
+                <p class="text">Установка зависимостей и запуск клиента</p>
+                <p class="code">cd Web-Chat-With-AI/frontend && npm install && npm run dev</p>
+            </div>
+        </div>
+    </div>
+    <div class="stek-row">  
+        <div class="title">
+            <p>Настройка axios для отправки запросов с Bearer</p>
+        </div>
+        <div class="content-blocks">
+            <div class="block">
+                <p class="code">import axios from "axios";
+
+const api = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  timeout: 10000,
+  headers: { "Content-Type": "application/json" },
+});
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("access");
+  if (token) {
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${token}`,
+    };
+  }
+  return config;
+});
+export default api;</p>
+            </div>
+        </div>
+    </div>
+    <div class="stek-row">  
+        <div class="title">
+            <p>Запросы на сервер</p>
+        </div>
+        <div class="content-blocks">
+            <div class="block">
+                <p class="text">Запрос на регистрацию</p>
+                <p class="code">export const registration_user = async (data_user: InputData) =>
+  axios.post<ResponseAuth>("/auth/registration", data_user);</p>
+            </div>
+            <div class="block">
+                <p class="text">Запрос на аутентификацию (для защищенных маршрутов)</p>
+                <p class="code">export const authentication = (): Promise<RaspondAuthentication> => {
+  const token = localStorage.getItem("access");
+
+  if (!token) {
+    return Promise.reject({
+      success: false,
+      message: "Токена нет",
+    } as RaspondAuthentication);
+  }
+
+  return new Promise<RaspondAuthentication>((resolve, reject) => {
+    axios
+      .get<RaspondAuthentication>("/auth/verify-user")
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при проверке токена:", error);
+        reject({
+          success: false,
+          message: "Ошибка при проверке токена",
+        } as RaspondAuthentication);
+      });
+  });
+};</p>
+            </div>
+            <div class="block">
+                <p class="text">Запрос на вход</p>
+                <p class="code">export const login_user = async (data_user: InputData) =>
+  axios.post<ResponseAuth>("/auth/login", data_user);</p>
+            </div>
+            <div class="block">
+                <p class="text">Кастомный хук с использованием <a href="https://tanstack.com/query/latest">tanstack/react-query</a></p>
+                <p class="code">export const useAuthRegistration = (data: InputData) => {
+  const navigator = useNavigate();
+  return useMutation(() => registration_user(data), {
+    onError: (error: any) => {
+      console.log("Ошибка:", error.response?.data.save_user.error);
+    },
+    onSuccess: (data) => {
+      localStorage.setItem("access", data.data.access || "");
+      localStorage.setItem("refresh", data.data.refresh || "");
+      localStorage.setItem("chat_id", data.data.id_chat || "");
+      navigator(`/chat/${data.data.id_chat}`);
+    },
+  });
+};</p>
+            </div>
+            <div class="block">
+                <p class="text">Мемоизация редуктора ввода логина и пароля</p>
+                <p class="code">let [dataForm, dispatch] = useReducer(reducer, { mail: "", password: "" });
+function reducer(state: InputData, action: ActionType) {
+    console.log(state);
+    switch (action.type) {
+      case InputType.LOGIN:
+        return { ...state, mail: action.payload };
+      case InputType.PASSWORD:
+        return { ...state, password: action.payload };
+      default:
+        return { ...state };
+    }
+  }
+  const handleLoginChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({ payload: e.target.value, type: InputType.LOGIN });
+    },
+    []
+  );
+  const loginProps = useMemo(
+    () => ({
+      current_value: dataForm.mail,
+      handler_input: handleLoginChange,
+      text: "Логин",
+    }),
+    [dataForm.mail, handleLoginChange]
+  );
+
+  const handlePasswordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch({ payload: e.target.value, type: InputType.PASSWORD });
+    },
+    []
+  );
+  const passwordProps = useMemo(
+    () => ({
+      current_value: dataForm.password,
+      handler_input: handlePasswordChange,
+      text: "Пароль",
+    }),
+    [dataForm.password, handlePasswordChange]
+  );</p>
+            </div>
+        </div>
+    </div>
+    <div class="stek-row">  
+        <div class="title">
+            <p>Маршруты в приложении</p>
+        </div>
+        <div class="content-blocks">
+            <table class="route-table">
+                <thead>
+                    <tr>
+                        <th>Метод</th>
+                        <th>Эндпоинт</th>
+                        <th>Описание</th>
+                        <th>Авторизация</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td>/chat</td>
+                        <td>Получение всех чатов</td>
+                        <td>Bearer Token</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/auth/registration</td>
+                        <td>Регистрация пользователя</td>
+                        <td>Без токена</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/auth/login</td>
+                        <td>Вход пользователя</td>
+                        <td>Без токена</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/auth/verify-user</td>
+                        <td>Верификация токена</td>
+                        <td>Bearer Token</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/chat/new_chat</td>
+                        <td>Создание нового чата</td>
+                        <td>Bearer Token</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/chat/{chat_id}</td>
+                        <td>Получение сообщений из чата</td>
+                        <td>Bearer Token</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="stek-row">  
+        <div class="title">
+            <p>WebSocket API (Socket.IO)</p>
+        </div>
+        <div class="content-blocks">
+            <div class="block">
+                <p class="text">Подключение к серверу</p>
+                <p class="code">const socket = io("http://localhost:3000", {
+  withCredentials: true,
+});</p>
+                <p class="text">Сервер слушает подключения по адресу <code class="inline-code">http://localhost:3000</code> с поддержкой CORS для запросов с фронтенда.</p>
+            </div>
+            <hr class="separator">
+            <div class="block">
+                <p class="text">События WebSocket</p>
+                <p class="sub-title">Подключение к серверу</p>
+                <ul class="description-list">
+                    <li><strong>Событие:</strong> <code class="inline-code">connection</code></li>
+                    <li><strong>Описание:</strong> Срабатывает при подключении нового пользователя.</li>
+                    <li><strong>Ответ сервера:</strong> Лог в консоли с ID пользователя.</li>
+                </ul>
+                <p class="text">Пример:</p>
+                <p class="code">⚡ Новый пользователь подключился: socket.id</p>
+            </div>
+            <div class="block">
+                <p class="sub-title">Вход в комнату</p>
+                <ul class="description-list">
+                    <li><strong>Событие:</strong> <code class="inline-code">joinRoom</code></li>
+                    <li><strong>Описание:</strong> Позволяет пользователю войти в комнату.</li>
+                    <li><strong>Параметры:</strong>
+                        <ul>
+                            <li><code class="inline-code">room</code> (string) — ID комнаты.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Ответ сервера:</strong> Сообщение о входе в комнату.</li>
+                </ul>
+                <p class="text">Пример отправки события:</p>
+                <p class="code">socket.emit("joinRoom", { room: "chat123" });</p>
+                <p class="text">Ответ:</p>
+                <p class="code">{
+  "text": "Вы присоединились к комнате chat123",
+  "room": "chat123",
+  "connection": true
+}</p>
+            </div>
+            <div class="block">
+                <p class="sub-title">Выход из комнаты</p>
+                <ul class="description-list">
+                    <li><strong>Событие:</strong> <code class="inline-code">leaveRoom</code></li>
+                    <li><strong>Описание:</strong> Позволяет пользователю покинуть комнату.</li>
+                    <li><strong>Параметры:</strong>
+                        <ul>
+                            <li><code class="inline-code">room</code> (string) — ID комнаты.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Ответ сервера:</strong> Сообщение о выходе из комнаты.</li>
+                </ul>
+                <p class="text">Пример отправки события:</p>
+                <p class="code">socket.emit("leaveRoom", { room: "chat123" });</p>
+                <p class="text">Ответ:</p>
+                <p class="code">{
+  "text": "Вы покинули комнату chat123",
+  "room": "chat123",
+  "connection": true
+}</p>
+            </div>
+            <div class="block">
+                <p class="sub-title">Отправка сообщения</p>
+                <ul class="description-list">
+                    <li><strong>Событие:</strong> <code class="inline-code">message</code></li>
+                    <li><strong>Описание:</strong> Отправка сообщения в чат. Сообщение сохраняется в базе данных, а также отправляется всем участникам комнаты.</li>
+                    <li><strong>Параметры:</strong>
+                        <ul>
+                            <li><code class="inline-code">room</code> (string) — ID комнаты.</li>
+                            <li><code class="inline-code">text</code> (string) — Текст сообщения.</li>
+                            <li><code class="inline-code">user_time</code> (string) — Время отправки сообщения.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="text">Пример отправки сообщения:</p>
+                <p class="code">socket.emit("message", {
+  room: "chat123",
+  text: "Привет, чат!",
+  user_time: new Date().toISOString(),
+});</p>
+                <p class="text">Ответ сервера для пользователя:</p>
+                <p class="code">{
+  "text": "Привет, чат!",
+  "timestamp": 1700000000000,
+  "from": "User",
+  "connect": false
+}</p>
+                <p class="text">Ответ от AI:</p>
+                <p class="code">{
+  "text": "Привет! Как я могу помочь?",
+  "timestamp": 1700000000500,
+  "from": "Bot",
+  "connect": false
+}</p>
+                <p class="text">Если возникла ошибка при обработке ответа AI:</p>
+                <p class="code">{
+  "success": false,
+  "text": "Ошибка сервера",
+  "timestamp": 1700000001000,
+  "from": "Bot",
+  "connect": false
+}</p>
+            </div>
+            <div class="block">
+                <p class="sub-title">Отключение пользователя</p>
+                <ul class="description-list">
+                    <li><strong>Событие:</strong> <code class="inline-code">disconnect</code></li>
+                    <li><strong>Описание:</strong> Срабатывает при отключении пользователя от сервера.</li>
+                    <li><strong>Ответ сервера:</strong> Лог в консоли.</li>
+                </ul>
+                <p class="text">Пример:</p>
+                <p class="code">❌ Пользователь socket.id отключился</p>
+            </div>
+            <div class="block">
+                <p class="sub-title">Пример использования на клиенте</p>
+                <p class="code">import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3000");
+
+socket.on("connect", () => {
+  console.log("Подключено к серверу");
+  socket.emit("joinRoom", { room: "chat123" });
+
+  socket.on("message", (msg) => {
+    console.log("Новое сообщение:", msg);
+  });
+
+  socket.emit("message", {
+    room: "chat123",
+    text: "Привет, чат!",
+    user_time: new Date().toISOString(),
+  });
+});
+
+socket.on("disconnect", () => {
+  console.log("Отключено от сервера");
+});</p>
+            </div>
+        </div>
+    </div>
+    <div class="stek-row">  
+        <div class="title">
+            <p>Middleware для аутентификации</p>
+        </div>
+        <div class="content-blocks">
+            <div class="block">
+                <p class="text">Middleware проверяет JWT токен перед установкой соединения.</p>
+            </div>
+            <div class="block">
+                <p class="text">Проверка токена</p>
+                <p class="code">import type { Socket } from "socket.io";
+import { verify_jwt_token } from "../../token/jwt";
+import { TypeToken } from "../../types/toket_type";
+
+export default function Middleware(
+  socket: Socket,
+  next: (err?: Error) => void
+) {
+  try {
+    const token = getBearer(socket.handshake.auth?.Authorization);
+    
+    if (!token) {
+      const err = new Error("Authentication error");
+      (err as any).data = { message: "Токен отсутствует или невалиден" };
+      console.error("❌ Ошибка аутентификации:", err);
+      return next(err);
+    }
+
+    const verify = verify_jwt_token(token, TypeToken.ACCESS);
+    if (!verify.success) {
+      const err = new Error("Authentication error");
+      (err as any).data = { message: "Токен недействителен или истек" };
+      console.error("❌ Ошибка проверки токена:", err);
+      return next(err);
+    }
+
+    console.log("✅ Аутентификация успешна!");
+    next();
+  } catch (e) {
+    console.error("❌ Ошибка Middleware:", e);
+    const err = new Error("Server error");
+    (err as any).data = { message: "Ошибка сервера" };
+    next(err);
+  }
+}
+
+const getBearer = (header?: string): string | undefined => {
+  if (!header || !header.startsWith("Bearer ")) return undefined;
+  return header.split("Bearer ")[1].trim();
+};</p>
+            </div>
+            <div class="block">
+                <p class="text">События WebSocket</p>
+                <ul class="description-list">
+                    <li><code class="inline-code">joinRoom</code>: Присоединение к комнате</li>
+                    <li><code class="inline-code">leaveRoom</code>: Выход из комнаты</li>
+                    <li><code class="inline-code">message</code>: Отправка сообщения</li>
+                    <li><code class="inline-code">disconnect</code>: Отключение пользователя</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    <div class="futer">
+      <div class="info">
+        <div>
+          <p class="razdel">Страницы</p>
+          <p class="punkt">Разработчики</p>
+          <p class="punkt">Продукты</p>
+          <p class="punkt">Наши продукты</p>
+        </div>
+        <div>
+          <p class="razdel">Юридическая ерунда</p>
+          <p class="punkt">Политика конфиденциальности</p>
+          <p class="punkt">Правила использования продукта</p>
+        </div>
+        <div>
+          <p class="razdel">Сотрудничества</p>
+          <p class="punkt">comercia@webhunt.ru</p>
+        </div>
+        <div>
+          <p class="razdel">Наблюдать за проектами</p>
+          <p class="punkt">Политика конфиденциальности</p>
+          <p class="punkt">Правила использования продукта</p>
+        </div>
+        <div>
+          <p class="razdel">Связь для вопросов</p>
+          <p class="punkt">help@webhunt.ru</p>
+        </div>
+      </div>
+      <div class="footer-line"></div>
+      <div class="info">
+        <img src="logo.svg" alt="Logo" class="logo">
+        <img src="SiteAbakan.svg" alt="Logo" class="SiteAbakan">
+        <button class = "button-futer"><img src="Telegram.svg"></button>
+      </div> 
+    </div>    
+</body>
+</html>
