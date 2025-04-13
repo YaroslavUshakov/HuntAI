@@ -1,48 +1,244 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Web Chat With AI - Documentation</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Involve:wght@400;600&family=Inter:wght@400&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class = "part">
-    <div class="main">
-      <div class = "Right-Column">
-        <img src="logo.svg" alt="Logo" class="logo">
-      </div>
-      <div class = "Left-Column">
-        <div class = "nav">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Involve:wght@400;600&family=Inter:wght@400&display=swap" rel="stylesheet"/>
+    <!-- Подключаем marked.js для обработки Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.12/lib/marked.min.js"></script>
+  </head>
+  <body>
+    <div class="layout">
+      <header class="header_chat">
+        <div class="header__logo">
+          <img src="logo.svg" alt="Logo" class="logo" />
+        </div>
+        <nav class="header__nav">
           <p class="header-text">Web Chat With AI</p>
           <div class="header-buttons">
-            <a class='button_header_common'>Наши продукты</a>
-            <a class='button_header'>Разработчики</a>
-            <a href = "Documentation.html" class='button_header_common'>Документация</a>
+            <a class="button_header_common">Наши продукты</a>
+            <a class="button_header">Разработчики</a>
+            <a href="Documentation.html" class="button_header_common">Документация</a>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="main-main">
-      <div class = "Right-Column-history">
-        <div class = "history-tab">
-          <p class = "text">История</p>
-          <a class = 'button_header_common'>Новый чат</a>
-        </div>
-        <div class="list-history">
-          <p class = "history-item">Ярослав Ушаков диазйгно гений повывыовrerge  tertretertertertert</p>
-          <p class = "history-item">Ярослав Ушаков диазйгно гений повывыовrerge  tertretertertertert</p>
-          <p class = "history-item">Ярослав Ушаков диазйгно гений повывыовrerge  tertretertertertert</p>
-          <p class = "history-item">Ярослав Ушаков диазйгно гений повывыовrerge  tertretertertertert</p>
-        </div>
-      </div>
-      <div class = "Left-Column">
-      </div>
-    </div>
-  </div>
+        </nav>
+      </header>
 
-    
-</body>
-</html>
+      <main class="main-content">
+        <aside class="sidebar sidebar--history">
+          <div class="history">
+            <div class="sidebar__top">
+              <p class="text">История</p>
+              <a class="button_header_common">Новый чат</a>
+            </div>
+            <div class="sidebar__list">
+              <p class="history-item">Ярослав Ушаков дизайн гений 💙</p>
+              <p class="history-item-no-activity">Вдохновляющий UI концепт</p>
+              <p class="history-item-no-activity">Идеи для веб-студии</p>
+              <p class="history-item-no-activity">Документация API WebHunt</p>
+            </div>
+          </div>
+          <div class="autorizacia">
+            <div class="user-info">
+              <img src="ЯрикФото.png" alt="User" class="user-icon" />
+              <div class="user-text">
+                <p class="user-name">Ярослав Ушаков</p>
+                <p class="user-status">Нет подписки</p>
+              </div>
+            </div>
+            <a class="button_header_common">Выйти</a>
+          </div>
+        </aside>
+
+        <section class="chat-area">
+          <div class="chat-messages">
+            <!-- Сообщение бота -->
+            <div class="message received">
+              <div class="message__body">
+                <div class="message__avatar">
+                  <img src="ЛогоЧата.svg" alt="Bot" class="message__avatar-img" />
+                </div>
+                <div class="message__wrapper">
+                  <div class="message__header">
+                    <span class="message__sender">HuntAI</span>
+                    <button class="message__copy-button" title="Копировать">
+                      <img src="copy.svg" alt="Copy" class="message__copy-icon"/>
+                    </button>
+                  </div>
+                  <div class="message__content markdown-content">
+                    <p>Now, when the .header-text content (e.g., "Web Chat With AI") is too long for its container, it will truncate with .... If you don’t see the ellipsis and want to force it, let me know, and I can suggest a specific max-width or other tweaks!</p>
+                    <div class="message__content-code">
+                      <div class="message__header">
+                        <div class = "Code">html</div>
+                        <img src="copy.svg" alt="Copy" class="message__copy-icon"/>
+                      </div>
+                      <pre class = "Code">.chat-input__button {
+                        background-color: #232DFC;
+                        color: white;
+                        border: none;
+                        padding: 10px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        font-family: Inter;
+                        font-size: 14px;
+                        transition: background-color 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between; /* Выравнивание содержимого по обеим сторонам */
+                        width: 40px;
+                        height: 40px;
+                    }
+                    
+                    .chat-input__button-text {
+                        display: none; /* Скрыто, если текст не нужен */
+                    }
+                    
+                    .chat-input__button-icon {
+                        width: 16px;
+                        height: 16px;
+                        fill: white; /* Цвет стрелки */
+                    }
+                    
+                    .chat-input__button:hover {
+                        background-color: #1e27d5;
+                    }</pre>
+                    </div>
+                    <p>Now, when the .header-text content (e.g., "Web Chat With AI") is too long for its container, it will truncate with .... If you don’t see the ellipsis and want to force it, let me know, and I can suggest a specific max-width or other tweaks!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Сообщение пользователя -->
+            <div class="message sent">
+              <div class="message__content">
+                <p class="message__text">
+                  Привет! Всё отлично, спасибо! Как ты? 🙌
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Форма ввода сообщения -->
+          <form class="chat-input" id="chat-form">
+            <textarea class="chat-input__textarea" placeholder="Введите запрос..." rows="1"></textarea>
+            <button type="submit" class="chat-input__button">
+              <img src="send.svg" alt="Send"/>
+            </button>
+          </form>        
+        </section>
+      </main>
+    </div>
+
+    <!-- Скрипт для обработки Markdown, отправки сообщений и копирования -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Обрабатываем Markdown для существующих сообщений
+        const markdownElements = document.querySelectorAll('.markdown-content');
+        markdownElements.forEach(element => {
+          element.innerHTML = marked.parse(element.textContent);
+        });
+
+        // Прокрутка чата вниз при загрузке
+        const chatArea = document.querySelector('.chat-area');
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        // Обработка отправки сообщения
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.querySelector('.chat-input__textarea');
+        const chatMessages = document.querySelector('.chat-messages');
+
+        chatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const messageText = chatInput.value.trim();
+          if (!messageText) return;
+
+          // Добавляем сообщение пользователя
+          const userMessage = document.createElement('div');
+          userMessage.classList.add('message', 'sent');
+          userMessage.innerHTML = `
+            <div class="message__content">
+              <p class="message__text">${messageText}</p>
+            </div>
+          `;
+          chatMessages.appendChild(userMessage);
+
+          // Очищаем поле ввода
+          chatInput.value = '';
+
+          // Прокрутка вниз
+          chatArea.scrollTop = chatArea.scrollHeight;
+
+          // Имитация ответа бота
+          setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.classList.add('message', 'received');
+            botMessage.innerHTML = `
+              <div class="message__body">
+                <div class="message__avatar">
+                  <img src="ЛогоЧата.svg" alt="Bot" class="message__avatar-img" />
+                </div>
+                <div class="message__wrapper">
+                  <div class="message__header">
+                    <span class="message__sender">HuntAI</span>
+                    <button class="message__copy-button" title="Копировать">
+                      <svg class="message__copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="message__content markdown-content">
+                    Я получил твое сообщение: **${messageText}**.  
+                    Вот мой ответ:  
+                    - Это пример ответа  
+                    - С использованием Markdown  
+                    [Узнать больше](https://example.com)
+                  </div>
+                </div>
+              </div>
+            `;
+            chatMessages.appendChild(botMessage);
+
+            // Обрабатываем Markdown в новом сообщении
+            const newMarkdown = botMessage.querySelector('.markdown-content');
+            newMarkdown.innerHTML = marked.parse(newMarkdown.textContent);
+
+            // Прокрутка вниз
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            // Добавляем обработчик для новой кнопки копирования
+            const newCopyButton = botMessage.querySelector('.message__copy-button');
+            newCopyButton.addEventListener('click', () => {
+              const textToCopy = newMarkdown.textContent;
+              navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Текст скопирован!');
+              }).catch(err => {
+                console.error('Ошибка копирования:', err);
+              });
+            });
+          }, 1000);
+
+          // Автоматическая высота textarea
+          chatInput.addEventListener('input', () => {
+            chatInput.style.height = 'auto';
+            chatInput.style.height = `${chatInput.scrollHeight}px`;
+          });
+        });
+
+        // Обработчик для существующих кнопок копирования
+        document.querySelectorAll('.message__copy-button').forEach(button => {
+          button.addEventListener('click', () => {
+            const messageContent = button.closest('.message').querySelector('.markdown-content').textContent;
+            navigator.clipboard.writeText(messageContent).then(() => {
+              alert('Текст скопирован!');
+            }).catch(err => {
+              console.error('Ошибка копирования:', err);
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+  </html>
