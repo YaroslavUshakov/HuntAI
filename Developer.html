@@ -10,9 +10,9 @@
 </head>
 <body>
     <div class="header">
-        <img src="logo.svg" alt="Logo" class="logo">
+        <a href="Main.html"><img  src="logo.svg" alt="Logo" class="logo"></a>
         <div class="header-buttons">
-            <a class="button_header_common">Наши продукты</a>
+            <a href="Product.html" class="button_header_common">Наши продукты</a>
             <a class="button_header">Разработчики</a>
             <a href="Documentation.html" class="button_header_common">Документация</a>
         </div>
@@ -74,7 +74,7 @@
             </div>
             <div>
                 <p class="razdel">Сотрудничество</p>
-                <p class="punkt">comercia@webhunt.ru</p>
+                <p class="punkt"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a2c1cdcfc7d0c1cbc3e2d5c7c0cad7ccd68cd0d7">[email&#160;protected]</a></p>
             </div>
             <div>
                 <p class="razdel">Наблюдать за проектами</p>
@@ -83,7 +83,7 @@
             </div>
             <div>
                 <p class="razdel">Связь для вопросов</p>
-                <p class="punkt">help@webhunt.ru</p>
+                <p class="punkt"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="472f222b37073022252f322933693532">[email&#160;protected]</a></p>
             </div>
         </div>
         <div class="footer-line"></div>
@@ -94,34 +94,38 @@
         </div> 
     </div>
     <!-- Authorization Panel -->
+    <button class="auth-panel__close">✕</button>
     <div class="auth-panel">
-        <button class="auth-panel__close">✕</button>
+        <div class="auth-panel__header">
+            <img src="img-login.png" alt="Header Image" class="auth-panel__header-image">
+        </div>
         <div class="auth-panel__content">
-          <div class="content-aut">
-            <div class="cont">
-              <div class ="verh">
-                <h2 class="t1">Вход</h2>
-                <button class="button-auth">Регистрация</button>
-              </div>
-              <p class="text-ver">Если вы уже используете один из наших продуктов, то у вас уже есть HuntID</p>
+            <div class="content-aut">
+                <div class="cont">
+                    <div class="verh">
+                        <h2 class="t1">Вход</h2>
+                        <button class="button-auth">Регистрация</button>
+                    </div>
+                    <p class="text-ver">Если вы уже используете один из наших продуктов, то у вас уже есть HuntID</p>
+                </div>
+                <div class="cont">
+                    <input type="text" class="input" placeholder="Логин или e-mail">
+                    <input type="password" class="input" placeholder="Пароль">
+                    <p class="dont-thihk-password"><a href="#" class="dont-thihk-password">Не помнишь пароль?</a></p>
+                </div>
+                <div class="cont">
+                    <div class="verh">
+                        <p class="text-ver">Войти при помощи</p>
+                        <a href="#" class="button_hea"><img src="google.svg" alt="Google"></a>
+                    </div>
+                    <a class="submit">Войти</a>
+                </div>
             </div>
-            <div class="cont">
-              <input type="text" class="input" placeholder="Логин или e-mail">
-              <input type="password" class="input" placeholder="Пароль">
-              <p class="dont-thihk-password"><a href="#" class="dont-thihk-password">Не помнишь пароль?</a></p>
-            </div>
-            <div class="cont">
-              <div class="verh">
-                <p class="text-ver">Войти при помощи</p>
-                <a href="#" class="button_hea"><img src="google.svg" alt="google"></a>
-              </div>
-              <a class="submit">Войти</a>
-            </div>
-          </div>
         </div>
     </div>
     <!-- Overlay -->
     <div class="overlay"></div>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
